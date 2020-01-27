@@ -1,15 +1,17 @@
 import React from 'react';
 import Nav from './Nav'
-import NotFound from './NotFound'
-import Photo from './Photo'
+import Search from './Search'
+import PhotoContainer from './PhotoContainer'
+import axios from 'axios'
+import apiKey from '../config'
 
+console.log(apiKey)
 
 function App() {
-  return <div className="container">
-    Hello Worm!
+  return <div>
+    <Search />
     <Nav />
-    <NotFound />
-    <Photo />
+    <PhotoContainer />
   </div>
 }
 
