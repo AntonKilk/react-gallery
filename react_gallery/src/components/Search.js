@@ -1,0 +1,1 @@
+// Add class to manage Search component

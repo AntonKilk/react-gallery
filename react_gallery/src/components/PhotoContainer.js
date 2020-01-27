@@ -1,0 +1,1 @@
+// Add Class to manage photo container
