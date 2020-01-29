@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import Nav from './Nav'
 import Search from './Search'
 import PhotoContainer from './PhotoContainer'
+import Page404 from './404'
 import axios from 'axios'
 import apiKey from '../config'
 import {
   BrowserRouter,
   Route,
+  Switch
 } from 'react-router-dom'
 
 export default class App extends Component {
@@ -47,6 +49,9 @@ export default class App extends Component {
           : <PhotoContainer data={this.state.photos} />
         }       
       </div>
+      <Switch>
+        <Route component={Page404} />
+      </Switch>
     </BrowserRouter>
   }
 }
