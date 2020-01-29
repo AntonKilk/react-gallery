@@ -4,30 +4,50 @@ import Search from './Search'
 import PhotoContainer from './PhotoContainer'
 import axios from 'axios'
 import apiKey from '../config'
-
-console.log(apiKey)
+import {
+  BrowserRouter,
+  Route,
+} from 'react-router-dom'
 
 export default class App extends Component {
   state = {
-    images: []
+    photos: [],
+    loading: true
   }
 
   componentDidMount(){
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=sunsets&per_page=24&format=json&nojsoncallback=1`)
-      .then(response =>{
-        this.setState({
-          images:response.data
-        })
+    this.performSearch()
+  }
+  // renders data of 24 photos from 'flickr.com'
+  performSearch = (query = 'pink') => {
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+    .then(response =>{
+      this.setState({
+        photos:response.data.photos.photo,
+        loading: false
       })
+    })
+    .catch(error => {
+      console.log('Error parsing and fetching data', error)
+    })
   }
 
   render(){
-    console.log( this.state.images )
-    return <div>
-    <Search />
-    <Nav />
-    <PhotoContainer />
-  </div>
+    return <BrowserRouter>
+      <div> 
+        <Route render={ history =>
+          <React.Fragment>
+            <Search {...history} onSearch={this.performSearch} />
+            <Nav {...history} onSearch={this.performSearch} />
+          </React.Fragment> 
+           } />     
+        {
+          (this.state.loading)
+          ? <p>Loading...</p>
+          : <PhotoContainer data={this.state.photos} />
+        }       
+      </div>
+    </BrowserRouter>
   }
 }
 

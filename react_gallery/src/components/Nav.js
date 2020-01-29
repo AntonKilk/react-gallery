@@ -1,24 +1,29 @@
 import React from 'react';
+import {
+    BrowserRouter,
+    NavLink
+  } from 'react-router-dom'
 
+// App navigation links
+// Show photos by defined subjects: "pink", "cars", "dancing"
 
-// App navigation links 
-
-// Check React-Router
-
-let Nav = () => {
-    return <nav className="main-nav">
-        <ul>
-            <li>
-                <a href="#">Cats</a>
-            </li>
-            <li>
-                <a href="#">Dogs</a>
-            </li>
-            <li>
-                <a href="#">Computers</a>
-            </li>
-        </ul>
-    </nav>
-}
+let Nav = (props) => (
+    <BrowserRouter>
+        <nav className="main-nav">
+            <ul>
+                <li>
+                    <NavLink to='/search/pink' onClick={ () => props.onSearch("pink") } >Pink</NavLink>
+                </li>
+                <li>
+                    <NavLink to='/search/cars' onClick={ () => props.onSearch("cars") } >Cars</NavLink>
+                </li>
+                <li>
+                    <NavLink to='/search/dancing' onClick={ () => props.onSearch("dancing") } >Dancing</NavLink>
+                </li>
+            </ul>
+        </nav>
+    </BrowserRouter>
+)
+    
 
 export default Nav
