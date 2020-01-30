@@ -37,7 +37,7 @@ export default class App extends Component {
   }
 
   render(){    
-    return <HashRouter basename="/react-gallery">
+    return <HashRouter>
       <Switch>
         <Route exact path="/"> {/* Redirect to /search */}
           <Redirect to="/search" />
