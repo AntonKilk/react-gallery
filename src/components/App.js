@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import Nav from './Nav'
 import Search from './Search'
 import PhotoContainer from './PhotoContainer'
-import Page404 from './404'
+import Page404 from './Page404'
 import axios from 'axios'
 import apiKey from '../config'
 import {
-  BrowserRouter,
+  HashRouter,
   Route,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom'
 
 export default class App extends Component {
@@ -20,7 +21,7 @@ export default class App extends Component {
   componentDidMount(){
     this.performSearch()
   }
-  // renders data of 24 photos from 'flickr.com'
+  // Render data of 24 photos from 'flickr.com'
   performSearch = (query = 'pink') => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
     .then(response =>{
@@ -29,30 +30,38 @@ export default class App extends Component {
         loading: false
       })
     })
+    // Catch Error if problem with fetching or parsing
     .catch(error => {
       console.log('Error parsing and fetching data', error)
     })
   }
 
-  render(){
-    return <BrowserRouter>
-      <div> 
-        <Route render={ history =>
+  render(){    
+    return <HashRouter basename="/react-gallery">
+      <Switch>
+        <Route exact path="/"> {/* Redirect to /search */}
+          <Redirect to="/search" />
+        </Route>
+
+        {/* Render the page: Search, Nav and PhotoContainer */}
+        <Route  path="/search" render={ history =>
           <React.Fragment>
             <Search {...history} onSearch={this.performSearch} />
-            <Nav {...history} onSearch={this.performSearch} />
+            <Nav {...history} onSearch={this.performSearch} /> 
+
+            {/* Show "Loading..." while rendering photos */}            
+            {
+              (this.state.loading)
+              ? <p>Loading...</p>
+              : <PhotoContainer data={this.state.photos} />
+            }
           </React.Fragment> 
-           } />     
-        {
-          (this.state.loading)
-          ? <p>Loading...</p>
-          : <PhotoContainer data={this.state.photos} />
-        }       
-      </div>
-      <Switch>
+        } />
+
+        {/* If no paths match any other routes, RENDER the PAGE NOT FOUND component */}         
         <Route component={Page404} />
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   }
 }
 

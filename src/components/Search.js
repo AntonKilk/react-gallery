@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
-//Search Component
-// Shows series of images by query, for example: "pink", "cats", "computers" etc
+
+// Search Component
+// Show series of images by query, for example: "pink", "cats", "computers" etc
 
 class Search extends React.Component {
 
@@ -9,15 +11,20 @@ class Search extends React.Component {
         searchText: ''
       }
 
+    // check propTypes for debugging
+    static propTypes = {
+        onSearch: PropTypes.func.isRequired
+    }
+
     onSearchChange = e => {
         this.setState({ searchText: e.target.value })
     }
 
     handleSubmit = e => {
         e.preventDefault()
-        this.props.onSearch(this.query.value)      
-        let searchQuery = this.query.value
-        let path = `search/${searchQuery}`
+        this.props.onSearch(this.state.searchText)      
+        let searchQuery = this.state.searchText
+        let path = `/search/${searchQuery}`
         this.props.history.push(path)
         e.currentTarget.reset()
     }
@@ -43,3 +50,4 @@ class Search extends React.Component {
 }
 
 export default Search
+

@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 import {
     BrowserRouter,
     NavLink
@@ -24,6 +25,10 @@ let Nav = (props) => (
         </nav>
     </BrowserRouter>
 )
-    
+
+// check propTypes for debugging
+Nav.propTypes = {
+    onSearch: PropTypes.func.isRequired
+}
 
 export default Nav

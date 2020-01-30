@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import Photo from './Photo'
 import NotFound from './NotFound'
 
@@ -20,7 +21,7 @@ let PhotoContainer = (props) => {
             key={photo.id}
             title={photo.title} />)
     }   else {
-        photos = <NotFound />   //Shows "Not Found" if no relevant photos was found
+        photos = <NotFound />   //Shows "Not Results" if no relevant photos has been found
     }
    
 
@@ -30,6 +31,11 @@ let PhotoContainer = (props) => {
             {photos}
         </ul>
     </div>
+}
+
+// check propTypes for debugging
+PhotoContainer.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default PhotoContainer
