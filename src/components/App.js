@@ -6,16 +6,17 @@ import Page404 from './Page404'
 import axios from 'axios'
 import apiKey from '../config'
 import {
-  HashRouter,
   Route,
   Switch,
-  Redirect
+  Redirect,
+  BrowserRouter
 } from 'react-router-dom'
 
 export default class App extends Component {
   state = {
     photos: [],
-    loading: true
+    loading: true,
+    query: ""
   }
 
   componentDidMount(){
@@ -23,11 +24,15 @@ export default class App extends Component {
   }
   // Render data of 24 photos from 'flickr.com'
   performSearch = (query = 'pink') => {
+    this.setState({
+      loading: true
+    })
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
     .then(response =>{
       this.setState({
         photos:response.data.photos.photo,
-        loading: false
+        loading: false,
+        query
       })
     })
     // Catch Error if problem with fetching or parsing
@@ -36,8 +41,9 @@ export default class App extends Component {
     })
   }
 
-  render(){    
-    return <HashRouter>
+  render(){
+    console.log(this.state.loading)   
+    return <BrowserRouter>
       <Switch>
         <Route exact path="/"> {/* Redirect to /search */}
           <Redirect to="/search" />
@@ -53,7 +59,9 @@ export default class App extends Component {
             {
               (this.state.loading)
               ? <p>Loading...</p>
-              : <PhotoContainer data={this.state.photos} />
+              : <PhotoContainer 
+                data={this.state.photos}
+                query = {this.state.query} />
             }
           </React.Fragment> 
         } />
@@ -61,7 +69,7 @@ export default class App extends Component {
         {/* If no paths match any other routes, RENDER the PAGE NOT FOUND component */}         
         <Route component={Page404} />
       </Switch>
-    </HashRouter>
+    </BrowserRouter>
   }
 }
 

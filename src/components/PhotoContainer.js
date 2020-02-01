@@ -26,7 +26,7 @@ let PhotoContainer = (props) => {
    
 
     return <div className="photo-container">
-        <h2>Results</h2>
+        <h2>Results for "{props.query}"</h2>
         <ul>
             {photos}
         </ul>
@@ -35,7 +35,8 @@ let PhotoContainer = (props) => {
 
 // check propTypes for debugging
 PhotoContainer.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.object).isRequired
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    query:PropTypes.string.isRequired
 }
 
 export default PhotoContainer
