@@ -43,7 +43,7 @@ export default class App extends Component {
 
   render(){
     console.log(this.state.loading)   
-    return <BrowserRouter>
+    return <BrowserRouter basename="/">
       <Switch>
         <Route exact path="/"> {/* Redirect to /search */}
           <Redirect to="/search" />
