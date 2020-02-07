@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import { withRouter } from "react-router-dom"
 
 
 // Search Component
@@ -30,7 +31,6 @@ class Search extends React.Component {
     }
 
     render() {
-        console.log(this.state.searchText)
         return <form className="search-form" onSubmit={this.handleSubmit} >
             <input type="search"
                 name="search" 
@@ -49,5 +49,5 @@ class Search extends React.Component {
     }
 }
 
-export default Search
+export default withRouter(Search)
 

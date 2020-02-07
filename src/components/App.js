@@ -8,8 +8,7 @@ import apiKey from '../config'
 import {
   Route,
   Switch,
-  Redirect,
-  BrowserRouter
+  BrowserRouter,
 } from 'react-router-dom'
 
 export default class App extends Component {
@@ -23,7 +22,7 @@ export default class App extends Component {
     this.performSearch()
   }
   // Render data of 24 photos from 'flickr.com'
-  performSearch = (query = 'pink') => {
+  performSearch = (query = 'finland') => {
     this.setState({
       loading: true
     })
@@ -42,28 +41,52 @@ export default class App extends Component {
   }
 
   render(){
-    console.log(this.state.loading)   
     return <BrowserRouter>
+      {/* Render the page: Searchbar and Navigation pane */}
+      <Search onSearch={this.performSearch} />
+      <Nav onSearch={this.performSearch} />
+
       <Switch>
-        <Route exact path="/"> {/* Redirect to /search */}
-          <Redirect to="/search" />
-        </Route>
+        <Route exact path="/"  render={ history =>
+          <PhotoContainer
+            {...history} 
+            data={this.state.photos}
+            query = {this.state.query}
+            loading = {this.state.loading} />
+        } />
 
-        {/* Render the page: Search, Nav and PhotoContainer */}
-        <Route  path="/search" render={ history =>
-          <React.Fragment>
-            <Search {...history} onSearch={this.performSearch} />
-            <Nav {...history} onSearch={this.performSearch} /> 
+        <Route exact path="/search/:query"  render={ history =>
+          <PhotoContainer
+            {...history} 
+            data={this.state.photos}
+            query = {this.state.query}
+            loading = {this.state.loading} />
+        } />
 
-            {/* Show "Loading..." while rendering photos */}            
-            {
-              (this.state.loading)
-              ? <p>Loading...</p>
-              : <PhotoContainer 
-                data={this.state.photos}
-                query = {this.state.query} />
-            }
-          </React.Fragment> 
+        {/* Separate route for Navigation pane: "finland", "cars and ""dancing"  */}
+        {/* Why browser "back" and "forward" buttons are not working? */}
+        <Route  path="/search/finland" render={ history =>
+           <PhotoContainer
+              {...history} 
+              data={this.state.photos}
+              query = {this.state.query}
+              loading = {this.state.loading} />
+        } />
+
+        <Route  path="/search/cars" render={ history =>
+          <PhotoContainer
+            {...history} 
+            data={this.state.photos}
+            query = {this.state.query}
+            loading = {this.state.loading} />
+        } />
+
+        <Route  path="/search/dancing" render={ history =>
+         <PhotoContainer
+            {...history} 
+            data={this.state.photos}
+            query = {this.state.query}
+            loading = {this.state.loading} />
         } />
 
         {/* If no paths match any other routes, RENDER the PAGE NOT FOUND component */}         
