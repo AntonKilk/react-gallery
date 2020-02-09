@@ -9,13 +9,13 @@ let Nav = (props) => (
    <nav className="main-nav">
         <ul>
             <li>
-                <NavLink to="/search/finland" onClick={ () => props.onSearch("cars") } >Finland</NavLink>
+                <NavLink to="/search/finland">Finland</NavLink>
             </li>
             <li>
-                <NavLink to="/search/cars" onClick={ () => props.onSearch("cars") } >Cars</NavLink>
+                <NavLink to="/search/cars">Cars</NavLink>
             </li>
             <li>
-                <NavLink to="/search/dancing" onClick={ () => props.onSearch("dancing") } >Dancing</NavLink>
+                <NavLink to="/search/math">Math</NavLink>
             </li>
         </ul>
     </nav>
