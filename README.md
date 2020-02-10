@@ -12,7 +12,7 @@ With the help of powerful "MVC" (Model, View, Controller) library, the app is bu
 
 ### Live Version:
 
-https://kilka-react-gallery.netlify.com/
+https://react-gallery-akilk.now.sh/
 
 <br>
 <br>
